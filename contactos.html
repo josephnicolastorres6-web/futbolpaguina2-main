@@ -17,11 +17,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="juegos.html">Juegos</a></li>
           <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
-          <li class="nav-item"><a class="nav-link active" href="contacto.html">Contacto</a></li>
-          <li class="nav-item"><a class="nav-link" href="galeria.html">Galería</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactos.html">Contactos</a></li>
+          <li class="nav-item"><a class="nav-link active" href="galeria.html">Galería</a></li>
+            <li class="nav-item"><a class="nav-link" href="formulario.html">Formulario</a></li>
         </ul>
       </div>
     </div>
@@ -33,10 +34,11 @@
       <div class="row align-items-start">
       
         <div class="col-md-7 mb-4">
-          <h2 class="fw-bold">Contacto</h2>
+          <h2 class="fw-bold text-light">Contacto</h2>
           <p class="text-light opacity-75 mb-4">Cuéntanos sobre tu experiencia gamer o tu proyecto y te responderemos en menos de 48 horas.</p>
 
-          <form class="bg-dark p-4 rounded-3 shadow">
+          <!-- FORMULARIO -->
+          <form id="contactForm" class="bg-dark p-4 rounded-3 shadow needs-validation" novalidate>
             <div class="mb-3">
               <label for="nombre" class="form-label text-light">Nombre</label>
               <input 
@@ -44,10 +46,10 @@
                 id="nombre" 
                 class="form-control bg-dark text-light border-secondary" 
                 placeholder="Tu nombre"
-                data-bs-toggle="tooltip" 
-                data-bs-placement="right" 
-                title="Escribe tu nombre completo">
+                required>
+              <div class="invalid-feedback">Por favor ingresa tu nombre.</div>
             </div>
+
             <div class="mb-3">
               <label for="correo" class="form-label text-light">Correo electrónico</label>
               <input 
@@ -55,30 +57,32 @@
                 id="correo" 
                 class="form-control bg-dark text-light border-secondary" 
                 placeholder="tucorreo@example.com"
-                data-bs-toggle="tooltip" 
-                data-bs-placement="right" 
-                title="Introduce un correo electrónico válido">
+                required>
+              <div class="invalid-feedback">Por favor ingresa un correo válido.</div>
             </div>
+
             <div class="mb-3">
               <label for="mensaje" class="form-label text-light">Mensaje</label>
               <textarea 
                 id="mensaje" 
                 rows="5" 
                 class="form-control bg-dark text-light border-secondary" 
-                placeholder="Escribe tu mensaje aquí..."
-                data-bs-toggle="tooltip" 
-                data-bs-placement="right" 
-                title="Cuéntanos sobre tu proyecto o consulta"></textarea>
+                placeholder="Escribe tu mensaje aquí..." 
+                required></textarea>
+              <div class="invalid-feedback">Por favor escribe un mensaje.</div>
             </div>
+
             <button 
               type="submit" 
-              class="btn btn-primary px-4"
-              data-bs-toggle="tooltip" 
-              data-bs-placement="right" 
-              title="Haz clic para enviar tu mensaje">
+              class="btn btn-primary px-4">
               Enviar
             </button>
           </form>
+
+          
+          <div id="alertaExito" class="alert alert-success mt-4 d-none" role="alert">
+            ✅ ¡Mensaje enviado con éxito! Te responderemos pronto.
+          </div>
         </div>
 
      
@@ -86,15 +90,9 @@
           <div class="bg-dark p-4 rounded-3 shadow h-100">
             <h5 class="text-light fw-bold mb-3">Información</h5>
             <ul class="list-unstyled text-light opacity-75">
-              <li class="mb-3" data-bs-toggle="tooltip" data-bs-placement="right" title="Ubicación principal de nuestra oficina">
-                <i class="bi bi-geo-alt-fill text-primary"></i> Bogotá, Colombia
-              </li>
-              <li class="mb-3" data-bs-toggle="tooltip" data-bs-placement="right" title="Escríbenos un correo para más información">
-                <i class="bi bi-envelope-fill text-primary"></i> contacto@gamezone.com
-              </li>
-              <li data-bs-toggle="tooltip" data-bs-placement="right" title="Llámanos o escríbenos por WhatsApp">
-                <i class="bi bi-telephone-fill text-primary"></i> +57 310 000 0000
-              </li>
+              <li class="mb-3"><i class="bi bi-geo-alt-fill text-primary"></i> Bogotá, Colombia</li>
+              <li class="mb-3"><i class="bi bi-envelope-fill text-primary"></i> contacto@gamezone.com</li>
+              <li><i class="bi bi-telephone-fill text-primary"></i> +57 310 000 0000</li>
             </ul>
           </div>
         </div>
@@ -104,7 +102,7 @@
 
 
   <footer>
-    <div class="container">
+    <div class="container text-center py-3 text-light">
       <p class="mb-0">© 2025 GameZone. Todos los derechos reservados.</p>
     </div>
   </footer>
@@ -113,8 +111,24 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
+    
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
+
+    
+    const form = document.getElementById('contactForm');
+    const alertaExito = document.getElementById('alertaExito');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        event.stopPropagation();
+      } else {
+        alertaExito.classList.remove('d-none');
+        form.reset();
+      }
+      form.classList.add('was-validated');
+    });
   </script>
 </body>
 </html>
